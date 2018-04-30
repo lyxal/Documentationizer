@@ -1,0 +1,291 @@
+
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <style>
+                    .main {
+                        background-color: #fffff;
+                        margin-left: 1em;
+                        margin-right: 1em;
+                        font-family: sans-serif;
+                        padding-left: 20%;
+                        width: 80%;
+                        float: right;
+                    }
+
+                    .sidebar {
+                        background-color: #eee;
+                        font-family: sans-serif;
+                        width: 15%;
+                        height: 100%;
+                        float: left;
+                        position: fixed;
+                    }
+
+                    .sidebar > h3, .sidebar > h4 {
+                        position: relative;
+                    }
+
+                    code {
+                        font-family: monospace, sans-serif;
+                        font-size: 96.5%;
+                    }
+
+                    .long {
+                        border-radius: 3px;
+                        border: 1px solid #ac9;
+                        background: #eeffcc;
+                    }
+
+                    .short {
+                        background-color: #eee;
+                    }
+
+                    h1 {
+                        color: #1a1a1a;
+                        margin-top: 0;
+                        font-size: 200%;
+                    }
+
+                    .method-name {font-weight:bold; font-size:1.2em;}
+
+                    p {
+                        line-height: 130%;
+                        text-align: justify;
+                        font-size: 1em;
+                    }
+
+                    .method, .variable {
+                        margin-bottom: 1%:
+                    }
+
+                    .source {
+                        border-bottom: 1px solid #ccc;
+                    }
+
+                    h2 {
+                        font-size: 150%;
+                        margin-bottom: 3%;
+                    }
+
+                    blockquote {
+                        background-color: #efefef;
+                        font-family: serif;
+                        font-style: italic;
+                        font-size: 1.4em;
+                        border-left: 5px solid #dedede;
+                    }
+
+                    td {
+
+                        border: gray 1px solid;
+                        text-align: center;
+
+                    }
+
+                </style>
+                <script src="code.js"></script>
+                <link href="c.css" type="text/css" rel="stylesheet">
+            </head>
+            <body>
+                <div class='main'>
+        <h1> Formatting Documents with CodeDoc
+</h1>
+<p class='source'> Source Code:  documentation.txt
+</p>
+<p><br></p>
+<h2 id='0'> 1. Introduction<br></h2>
+<p> So you want to make documentations for your programs, do you? Well, you&#x27;ve come to the right place. <strong>CodeDoc</strong> allows you to create a simple text file with typical forum style formatting and convert it into a <code class='short'>.html</code> file that contains your styled documentation. In this document, we&#x27;ll look at the different flags used as well as some of the underlying systems so that you can easily document your files.<br></p>
+<p><br></p>
+<h2 id='1'> 2. The Basics<br></h2>
+<h3 id='2'> 2.1. What Are Flags?<br></h3>
+ <strong>Flags</strong> are identifiers placed at the start of a line to tell the styler what each line is. For example, the <code class='short'>!t:</code> flag indicates that the line being processed is the title of the document. Flags follow this format: <code class='short'>!indentifier:</code>, where <code class='short'>identifier</code> is replaceable by any valid flag letter. The table below shows all the current flags that can be used:<br>
+<p><br></p>
+<table>
+
+<th> Letter<br></th>
+<th> Meaning<br></th>
+
+<tr>
+<td> <code class='short'>!ln:</code><br></td>
+<td> Declares the library name being documented. If left blank, <code class='short'>self</code> is set as the value<br></td>
+
+</tr><tr>
+<td> <code class='short'>!t:</code><br></td>
+<td> Creates a level 1 heading ( <code class='short'>&lt;h1&gt;</code> ) with any text after the <code class='short'>:</code> at the top of the page. Only reccommended to be used once<br></td>
+
+</tr><tr>
+<td> <code class='short'>!s:</code><br></td>
+<td> Stores the location of the library documented with a solid border at the bottom. Like <code class='short'>!t:</code>, only reccommended to be used once<br></td>
+
+</tr><tr>
+<td> <code class='short'>!h:</code><br></td>
+<td> Creates a level 2 heading ( <code class='short'>&lt;h2&gt;</code> ) with any other text after the <code class='short'>:</code>. Unlike <code class='short'>!t:</code>, it can be used several times, with each usage creating a link in the navigation side bar<br></td>
+
+</tr><tr>
+<td> <code class='short'>!sh:</code><br></td>
+<td> Creates a level 3 heading ( <code class='short'>&lt;h3&gt;</code> ) with any other text after the <code class='short'>:</code>. Pretty much the same as <code class='short'>!h:</code> but just smaller on screen and in the nav bar<br></td>
+
+</tr><tr>
+<td> <code class='short'>!c:</code><br></td>
+<td> Creates a snippet allowing for a class to be defined and henceforth documented. <em>See below for more on how to use the !c flag</em><br></td>
+
+</tr><tr>
+<td> <code class='short'>!m:</code><br></td>
+<td> Like the <code class='short'>!c:</code> flag, but instead of having a class defined, a method is defined<br></td>
+
+</tr><tr>
+<td> <code class='short'>!v:</code><br></td>
+<td> Same as <code class='short'>!m:</code> but with a variable<br></td>
+
+</tr><tr>
+<td> <code class='short'>!d:</code><br></td>
+<td> Creates a description that relates to either a <code class='short'>!c:</code> flag, a <code class='short'>!m:</code> flag or a <code class='short'>!v:</code> flag.<br></td>
+
+</tr><tr>
+<td> <code class='short'>!nt:</code><br></td>
+<td> Defines the start of a new table. Same as <code class='short'>&lt;table&gt;</code> tag in HTML<br></td>
+
+</tr><tr>
+<td> <code class='short'>!tc:</code><br></td>
+<td> Creates a table column. Same as <code class='short'>&lt;th&gt;</code> tag in HTML<br></td>
+
+</tr><tr>
+<td> <code class='short'>!tr:</code><br></td>
+<td> Creates a table row. Same as <code class='short'>&lt;tr&gt;</code> tag in HTML<br></td>
+
+</tr><tr>
+<td> <code class='short'>!td:</code><br></td>
+<td> Creates a cell in a table. Same as <code class='short'>&lt;td&gt;</code> tag in HTML<br></td>
+
+</tr><tr>
+<td> <code class='short'>!et:</code><br></td>
+<td> Signifies the end of a table. Same as <code class='short'>&lt;/table&gt;</code> tag in HTML<br></td>
+
+</tr><tr>
+<td> <code class='short'>!lc:</code><br></td>
+<td> Purely for human readability of plain text / <em>behind the scenes</em> documentation. Used to specify the language of a following long snippet. Probably should use <code class='short'>!#:</code> instead<br></td>
+
+</tr><tr>
+<td> <code class='short'>!p:</code><br></td>
+<td> Like the <code class='short'>!d:</code> flag, but more general purpose and reccommended if not describing a method/variable/class<br></td>
+
+</tr><tr>
+<td> <code class='short'>!q:</code><br></td>
+<td> Acts the same as the <code class='short'>&lt;blockquote&gt;</code> tag in HTML, in the way that it creates a quote looking box<br></td>
+
+</tr><tr>
+<td> <code class='short'>!pre:</code><br></td>
+<td> Allows for easy and convienient use of formatting symbols <em>(see section 2.3)</em><br></td>
+</tr><tr>
+<td> <code class='short'>!nl:</code><br></td>
+<td> Defines the start of a new list. Same as <code class='short'>&lt;ul&gt;</code> tag in HTML. <em>There may be support for ordered lists in the future</em><br></td>
+
+</tr><tr>
+<td> <code class='short'>!li:</code><br></td>
+<td> Equivalent of HTML&#x27;s <code class='short'>&lt;li&gt;</code> tag. Creates a list item<br></td>
+
+</tr><tr>
+<td> <code class='short'>!el:</code><br></td>
+<td> Signifies the end of a list. Same as <code class='short'>&lt;/ul&gt;</code> tag in HTML<br></td>
+
+</tr><tr>
+<td> <code class='short'>!#:</code><br></td>
+<td> Allows for the creater of the documentation to leave a helpful comment without having it seen by everyone viewing the final product<br></td>
+
+</tr><tr>
+<td> <code class='short'>! :</code><br></td>
+<td> Places a blank line/ <code class='short'>\n</code> / <code class='short'>&lt;br&gt;</code> into the page.<br></td>
+</tr></table>
+<br>
+<h3 id='3'> 2.2. Usage of Flags<br></h3>
+ Most flags are easy to use: just state the flag then any text, like so:<br>
+<br>
+<div class='long'>
+
+
+
+
+<code class='prettyprint'>!t:&nbsp;Title&nbsp;Name<br>!s:&nbsp;Source&nbsp;Code&nbsp;Location<br><br>!h:&nbsp;My&nbsp;Great&nbsp;Heading<br>!sh:&nbsp;Hello&nbsp;World<br><br>!p:&nbsp;Some&nbsp;text&nbsp;here</code></div><br> However, there are some flags which require special syntax, like the <code class='short'>!c:</code> flag and the <code class='short'>!m:</code> flag. Here is a full syntax list of all the flags and what they require (<em>note that optional parts are in [ ]&#x27;s and parts which are to be changed are in | |&#x27;s</em>)<br>
+<p><br></p>
+
+<p><br></p>
+<div class='long'>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<code class='prettyprint'>!t:&nbsp;|Title&nbsp;Name|<br>!s:&nbsp;|Source&nbsp;Location|<br><br>!h:&nbsp;|Heading|<br>!sh:&nbsp;|Subheading|<br><br>!c:&nbsp;self.|Class&nbsp;Name|([parameters])<br>!m:&nbsp;self.|Method&nbsp;Name|([parameters])<br>!v:&nbsp;self.|Variable&nbsp;Name|<br><br>!d:&nbsp;|Text&nbsp;here|<br>!p:&nbsp;|Text&nbsp;here|<br>!q:&nbsp;|Text&nbsp;here|<br>!pre:&nbsp;|Text&nbsp;here|<br><br>!nt:&nbsp;[Descriptive&nbsp;Name&nbsp;(not&nbsp;shown)]<br>!tc:&nbsp;|Name|<br>!tr:&nbsp;[Descriptive&nbsp;Name&nbsp;(not&nbsp;shown)]<br>!td:&nbsp;|Data|<br>!et:&nbsp;[Descriptive&nbsp;Name&nbsp;of&nbsp;table&nbsp;being&nbsp;closed&nbsp;(not&nbsp;shown)]<br><br>!nl:&nbsp;[Descriptive&nbsp;Name&nbsp;(not&nbsp;shown)]<br>!li:&nbsp;|Text|<br>!el:&nbsp;[Descriptive&nbsp;Name&nbsp;of&nbsp;list&nbsp;being&nbsp;closed&nbsp;(not&nbsp;shown)]<br><br>!#:&nbsp;[Comment]<br>!&nbsp;:&nbsp;[Anything&nbsp;you&nbsp;want&nbsp;(not&nbsp;shown)<br><br>!lc:&nbsp;|Language&nbsp;of&nbsp;Long&nbsp;Code&nbsp;Snippet|</code></div><br> But there is more to this documentation tool than <em>just</em> flags... there&#x27;s also the feature of inline text formatting, something provided by most forums (such as <em>StackOverflow</em> ).<br>
+<p><br></p>
+ There are four ways to format text: using <code class='short'>_</code>(turns text into italics), <code class='short'>*</code> (turns text into bold), <em>`</em> (turns text into inline <code class='short'>code</code> snippets) and using tabs (turns code into a long snippet). <strong>[Edit: The `~` character adds an underline to any text]</strong><br>
+<p><br></p>
+ For example, given the following <code class='short'>CodeDoc</code><br>
+<br>
+
+<div class='long'>
+
+
+
+
+
+<code class='prettyprint'>!p:&nbsp;_Hello_&nbsp;there,&nbsp;*this&nbsp;text*&nbsp;has&nbsp;been&nbsp;`very&nbsp;much`&nbsp;formatted.<br>!lc:&nbsp;Python<br>!#:&nbsp;Remember,&nbsp;the&nbsp;above&nbsp;line&nbsp;is&nbsp;only&nbsp;for&nbsp;readability<br>!&nbsp;:<br>	for&nbsp;i&nbsp;in&nbsp;range(10):<br>	&nbsp;&nbsp;&nbsp;&nbsp;print(i)</code></div><br> <em>Hello</em> there, <strong>this text</strong> has been <code class='short'>very much</code> formatted.<br>
+
+<br>
+<div class='long'>
+
+<code class='prettyprint'>for&nbsp;i&nbsp;in&nbsp;range(10):<br>&nbsp;&nbsp;&nbsp;&nbsp;print(i)</code></div><br> The two flags <code class='short'>!c</code> and <code class='short'>!ln</code> require some discussion, mainly because of the way they affect the <code class='short'>!m</code> and <code class='short'>!v</code> flags. In the underlying program (written in <em>python</em> by the way) are two variables: <code class='short'>libname</code> and <code class='short'>classname</code>. At the beginning of the program, these variables are initalised like so:<br>
+
+<br>
+<div class='long'>
+
+<code class='prettyprint'>classname&nbsp;=&nbsp;&quot;&quot;<br>libname&nbsp;=&nbsp;&quot;self&quot;</code></div><br><br>
+
+<div class='long'>
+
+
+
+
+
+
+
+
+<code class='prettyprint'>!ln:&nbsp;mylib<br>!#:&nbsp;...<br>!c:&nbsp;self.myclass(self,&nbsp;x,&nbsp;y,&nbsp;z)<br>!#:&nbsp;...<br>!m:&nbsp;self.myfunc(a,&nbsp;b,&nbsp;c)<br>!#:&nbsp;...<br>!h:&nbsp;foo&nbsp;bar<br>!#:&nbsp;...<br>!m:&nbsp;self.yourfunc(d,e,f)</code></div><br><p><br></p>
+<p><br></p>
+ mylib. <strong>myclass</strong> ( <em>self, x, y, z</em> )<br>
+ myclass. <strong>myfunc</strong> ( <em>a, b, c</em> )<br>
+ <strong>foo bar</strong><br>
+<br>
+ mylib. <strong>yourfunc</strong> ( <em>d,e,f</em> )<br>
+<br>
+ Which is why it&#x27;s important to understand that using <code class='short'>!h</code> resets <code class='short'>classname</code> to <code class='short'>&quot;&quot;</code> while using <code class='short'>!sh</code> doesn&#x27;t<br>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+<p><br></p>
+
+                </div>
+                <div class='sidebar'>
+                    <h3> self </h3>
+                    <br>
+                <a href="#0"><h4>1. Introduction
+</h4></a><a href="#1"><h4>2. The Basics
+</h4></a><a href="#2"><h5>: 2.1. What Are Flags?<br></h5></a><a href="#3"><h5>: 2.2. Usage of Flags<br></h5></a></div></body>

@@ -507,7 +507,7 @@ buttons = [bold_button, italic_button, underline_button, code_button,
            quote_button, link_button, image_button, save_button, open_button,
            new_button]
 
-button_x, button_y = 570, 5
+button_x, button_y = 400, 5
 
 main = screens.ScreenXY("DocEdit", window)
 
@@ -516,7 +516,7 @@ for button in buttons:
     button.config(height=1)
     button.config(relief=tkinter.FLAT)
     main.add_item(button, button_x, button_y)
-    button_x += button.winfo_width() + 25
+    button_x += button.winfo_width() + 50
 
 
 
